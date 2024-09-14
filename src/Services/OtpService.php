@@ -23,6 +23,7 @@ class OtpService
     /**
      * @var Client The HTTP client used for API requests
      */
+
     private $client;
 
     /**
