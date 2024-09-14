@@ -1,4 +1,4 @@
-# BDApps API Laravel Package
+# BDApps API Laravel Package test
 
 This Laravel package provides an easy-to-use interface for integrating with the BDApps API, allowing you to send SMS, handle USSD sessions, manage OTP, and perform CAAS operations in your Laravel applications.
 
