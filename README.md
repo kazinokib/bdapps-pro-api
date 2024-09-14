@@ -55,6 +55,19 @@ public function sendSms(BdappsApi $bdappsApi)
 }
 ```
 
+### Receive SMS
+
+```php
+use Kazinokib\BdappsApi\BdappsApi;
+
+public function receiveSms(BdappsApi $bdappsApi)
+{
+    $result = $bdappsApi->smsService->receiveSms();
+    // Handle the result
+}
+```
+
+
 ### USSD Service
 
 To send a USSD message:

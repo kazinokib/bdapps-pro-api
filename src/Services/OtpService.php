@@ -30,7 +30,7 @@ class OtpService
      *
      * @param array $config The configuration array containing API credentials and settings
      */
-    public function __construct(array $config): void
+    public function __construct(array $config)
     {
         $this->config = $config;
         $this->client = new Client([
