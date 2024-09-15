@@ -7,26 +7,10 @@ use Kazinokib\BdappsApi\Services\SmsService;
 use Kazinokib\BdappsApi\Services\UssdService;
 use Kazinokib\BdappsApi\Services\CaasService;
 use Kazinokib\BdappsApi\Services\OtpService;
+use Kazinokib\BdappsApi\Services\SubscriptionService;
 
-/**
- * Class BdappsApiServiceProvider
- *
- * This service provider is responsible for registering the BdappsApi services
- * and configuration with the Laravel application.
- *
- * @package Kazinokib\BdappsApi
- */
 class BdappsApiServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * This method is called by Laravel during the service provider registration process.
-     * It binds the BdappsApi services to the service container and merges the package
-     * configuration.
-     *
-     * @return void
-     */
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/bdappsapi.php', 'bdappsapi');
@@ -47,26 +31,23 @@ class BdappsApiServiceProvider extends ServiceProvider
             return new OtpService($app['config']['bdappsapi']);
         });
 
+        $this->app->singleton(SubscriptionService::class, function ($app) {
+            return new SubscriptionService($app['config']['bdappsapi']);
+        });
+
         $this->app->singleton(BdappsApi::class, function ($app) {
             return new BdappsApi(
                 $app[SmsService::class],
                 $app[UssdService::class],
                 $app[CaasService::class],
-                $app[OtpService::class]
+                $app[OtpService::class],
+                $app[SubscriptionService::class]
             );
         });
 
         $this->app->alias(BdappsApi::class, 'bdappsapi');
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * This method is called by Laravel after all services have been registered.
-     * It publishes the package configuration file to the application's config directory.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->publishes([

@@ -6,6 +6,7 @@ use Kazinokib\BdappsApi\Services\SmsService;
 use Kazinokib\BdappsApi\Services\UssdService;
 use Kazinokib\BdappsApi\Services\CaasService;
 use Kazinokib\BdappsApi\Services\OtpService;
+use Kazinokib\BdappsApi\Services\SubscriptionService;
 
 /**
  * Class BdappsApi
@@ -38,23 +39,31 @@ class BdappsApi
     protected $otpService;
 
     /**
+     * @var SubscriptionService The Subscription service instance
+     */
+    protected $subscriptionService;
+
+    /**
      * BdappsApi constructor.
      *
      * @param SmsService $smsService The SMS service instance
      * @param UssdService $ussdService The USSD service instance
      * @param CaasService $caasService The CaaS service instance
      * @param OtpService $otpService The OTP service instance
+     * @param SubscriptionService $subscriptionService The Subscription service instance
      */
     public function __construct(
         SmsService $smsService,
         UssdService $ussdService,
         CaasService $caasService,
-        OtpService $otpService
+        OtpService $otpService,
+        SubscriptionService $subscriptionService
     ) {
         $this->smsService = $smsService;
         $this->ussdService = $ussdService;
         $this->caasService = $caasService;
         $this->otpService = $otpService;
+        $this->subscriptionService = $subscriptionService;
     }
 
     /**
@@ -95,5 +104,20 @@ class BdappsApi
     public function otp(): OtpService
     {
         return $this->otpService;
+    }
+
+    /**
+     * Get the Subscription service instance.
+     *
+     * @return SubscriptionService The Subscription service instance
+     */
+    public function subscription(): SubscriptionService
+    {
+        return $this->subscriptionService;
+    }
+
+    public function handleSubscriptionNotification(): array
+    {
+        return $this->subscriptionService->handleNotification();
     }
 }
